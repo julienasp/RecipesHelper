@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.nfc.tech.Ndef;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private NfcAdapter nfcAdapter = null;
     private Tag mytag;
     private Context ctx;
-    ImageView iv_nfc;
+    private ImageView iv_nfc;
+    private TextView tv_nfc_ok;
     private PendingIntent mPendingIntent = null;
     private IntentFilter writeTagFilters[];
 
@@ -42,12 +44,14 @@ public class MainActivity extends AppCompatActivity {
                     case NfcAdapter.STATE_OFF:
                         Toast.makeText(ctx,"NFC not available!", Toast.LENGTH_LONG).show();
                         iv_nfc.setImageResource(R.drawable.nfcred300x300);
+                        tv_nfc_ok.setVisibility(View.INVISIBLE);
                         break;
                     case NfcAdapter.STATE_TURNING_OFF:
                         break;
                     case NfcAdapter.STATE_ON:
                         Toast.makeText(ctx,"NFC available!", Toast.LENGTH_LONG).show();
                         iv_nfc.setImageResource(R.drawable.nfcgreen300x300);
+                        tv_nfc_ok.setVisibility(View.VISIBLE);
                         break;
                     case NfcAdapter.STATE_TURNING_ON:
                         break;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         iv_nfc = (ImageView) findViewById(R.id.imageView_nfc);
+        tv_nfc_ok = (TextView) findViewById(R.id.textView_nfc_ok);
         setSupportActionBar(toolbar);
         ctx = this;
 
@@ -75,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 ((BitmapDrawable)iv_nfc.getDrawable()).getBitmap().recycle();
 
                 iv_nfc.setImageResource(R.drawable.nfcgreen300x300);
+                tv_nfc_ok.setVisibility(View.VISIBLE);
             }
             else{
                 Toast.makeText(this,"NFC not available!", Toast.LENGTH_LONG).show();
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 ((BitmapDrawable)iv_nfc.getDrawable()).getBitmap().recycle();
 
                 iv_nfc.setImageResource(R.drawable.nfcred300x300);
+                tv_nfc_ok.setVisibility(View.INVISIBLE);
 
                 //AlertDialog to turn on NFC
                 AlertDialog.Builder alertbox = new AlertDialog.Builder(ctx);

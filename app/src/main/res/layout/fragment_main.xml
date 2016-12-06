@@ -22,7 +22,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView_nfc" app:srcCompat="@drawable/nfcblack300x300"
-                android:layout_alignParentTop="true" android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true" android:layout_alignParentEnd="true"/>
+                android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+        <TextView
+                android:text="You can scan the NFC recipe tag!"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_nfc_ok"
+                tools:textSize="20sp"
+                android:layout_below="@+id/imageView_nfc" android:layout_centerHorizontal="true"
+                tools:textColor="@android:color/background_light"
+                android:background="@android:color/holo_green_light" android:padding="10dp"
+                android:visibility="invisible"/>
     </RelativeLayout>
 </RelativeLayout>
