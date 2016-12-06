@@ -3,6 +3,7 @@
           package="com.example.juasp_g73.recipeshelper">
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="false" />
     <uses-feature
             android:name="android.hardware.nfc"
             android:required="true" />

@@ -1,9 +1,13 @@
 package com.example.juasp_g73.recipeshelper;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +22,8 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.content.Context;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ImageView iv_nfc = (ImageView) findViewById(R.id.imageView_nfc);
         setSupportActionBar(toolbar);
 
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -45,13 +52,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter != null && nfcAdapter.isEnabled()){
             Toast.makeText(this,"NFC available!", Toast.LENGTH_LONG).show();
+            iv_nfc.setBackground(ctx.getDrawable(R.drawable.nfcgreen));
         }
         else{
             Toast.makeText(this,"NFC not available!", Toast.LENGTH_LONG).show();
+            iv_nfc.setBackground(ctx.getDrawable(R.drawable.nfcred));
+
+            AlertDialog.Builder alertbox = new AlertDialog.Builder(ctx);
+            alertbox.setTitle("NFC disabled");
+            alertbox.setMessage("You must turn on your phone's NFC functionnality to use this app.");
+            alertbox.setPositiveButton("Turn On", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        Intent intent = new Intent(Settings.ACTION_NFC_SETTINGS);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                        startActivity(intent);
+                    }
+                }
+            });
+            alertbox.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            alertbox.show();
         }
 
         mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
