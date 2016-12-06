@@ -1,6 +1,7 @@
 package core;
 
 import java.sql.Time;
+import java.util.Vector;
 
 /**
  * Created by JUASP-G73 on 06/12/2016.
@@ -14,6 +15,7 @@ public class Recipe {
     private String image_url;
     private Time preparation_time;
     private Time cooking_time;
+    private Vector<Direction> directions;
 
     public Recipe(Integer id, String name, String description, Integer nb_portions, Integer calories, String image_url, Time preparation_time, Time cooking_time) {
         this.id = id;
@@ -88,5 +90,13 @@ public class Recipe {
 
     public void setCooking_time(Time cooking_time) {
         this.cooking_time = cooking_time;
+    }
+
+    public Vector<Direction> getDirections() {
+        return directions;
+    }
+
+    public void setDirections(Vector<Direction> directions) {
+        this.directions = directions;
     }
 }

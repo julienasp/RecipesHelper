@@ -1,6 +1,5 @@
 package core;
 
-import java.util.Vector;
 
 /**
  * Created by JUASP-G73 on 06/12/2016.
@@ -10,7 +9,6 @@ public class Ingredient {
     private String name;
     private String linked_light;
     private String picture_url;
-    private Vector<Direction> directions;
 
     public Ingredient(Integer id, String name, String linked_light, String picture_url) {
         this.id = id;
@@ -49,13 +47,5 @@ public class Ingredient {
 
     public void setPicture_url(String picture_url) {
         this.picture_url = picture_url;
-    }
-
-    public Vector<Direction> getDirections() {
-        return directions;
-    }
-
-    public void setDirections(Vector<Direction> directions) {
-        this.directions = directions;
     }
 }
