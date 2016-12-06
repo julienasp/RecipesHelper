@@ -42,25 +42,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         ImageView iv_nfc = (ImageView) findViewById(R.id.imageView_nfc);
         setSupportActionBar(toolbar);
-
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        ctx = this;
 
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter != null && nfcAdapter.isEnabled()){
             Toast.makeText(this,"NFC available!", Toast.LENGTH_LONG).show();
-            iv_nfc.setBackground(ctx.getDrawable(R.drawable.nfcgreen));
+            //iv_nfc.setImageResource(R.drawable.nfcgreen);
         }
         else{
             Toast.makeText(this,"NFC not available!", Toast.LENGTH_LONG).show();
-            iv_nfc.setBackground(ctx.getDrawable(R.drawable.nfcred));
+            //iv_nfc.setBackground(ctx.getDrawable(R.drawable.nfcred));
 
             AlertDialog.Builder alertbox = new AlertDialog.Builder(ctx);
             alertbox.setTitle("NFC disabled");
