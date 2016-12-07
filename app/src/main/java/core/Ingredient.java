@@ -10,6 +10,10 @@ public class Ingredient {
     private String linked_light;
     private String picture_url;
 
+    public Ingredient(Integer id) {
+        this.id = id;
+    }
+
     public Ingredient(Integer id, String name, String linked_light, String picture_url) {
         this.id = id;
         this.name = name;

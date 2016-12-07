@@ -11,9 +11,13 @@ public class Direction {
     private Integer order;
     private String description;
     private String video_url;
-    private String img_url;
+    private String image_url;
     private Vector<Ingredient> direction_ingredients;
     private Vector<Tool> direction_tools;
+
+    public Direction(Integer id) {
+        this.id = id;
+    }
 
     public Direction(Integer id, Integer recipe_id, Integer order, String description) {
         this.id = id;
@@ -62,12 +66,12 @@ public class Direction {
         this.video_url = video_url;
     }
 
-    public String getImg_url() {
-        return img_url;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public Vector<Ingredient> getDirection_ingredients() {

@@ -17,6 +17,10 @@ public class Recipe {
     private Time cooking_time;
     private Vector<Direction> directions;
 
+    public Recipe(Integer id) {
+        this.id = id;
+    }
+
     public Recipe(Integer id, String name, String description, Integer nb_portions, Integer calories, String image_url, Time preparation_time, Time cooking_time) {
         this.id = id;
         this.name = name;

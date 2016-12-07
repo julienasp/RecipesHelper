@@ -9,6 +9,10 @@ public class Tool {
     private String linked_light;
     private String image_url;
 
+    public Tool(Integer id) {
+        this.id = id;
+    }
+
     public Tool(Integer id, String name, String linked_light, String image_url) {
         this.id = id;
         this.name = name;
