@@ -1,15 +1,18 @@
 package core;
 
+import ca.usherbrooke.domus.lights.Light;
+import ca.usherbrooke.domus.lights.LightRepository;
+
 /**
  * Created by JUASP-G73 on 06/12/2016.
  */
-public class Tool {
+public class Tool extends AbstractLightLover {
     private Integer id;
     private String name;
     private String linked_light;
     private String image_url;
 
-    public Tool(Integer id) {
+    public Tool(Integer id)  {
         this.id = id;
     }
 
@@ -50,5 +53,20 @@ public class Tool {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    @Override
+    public void showHint() {
+        Light toolLight = this.lightRepo.getLight(getLinked_light());
+        try {
+            toolLight.turnOn();
+
+            //We keep the light open for 15 secondes
+            Thread.sleep(15000);
+
+            toolLight.turnOff();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

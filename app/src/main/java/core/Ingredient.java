@@ -1,10 +1,13 @@
 package core;
 
 
+import ca.usherbrooke.domus.lights.Light;
+import ca.usherbrooke.domus.lights.LightRepository;
+
 /**
  * Created by JUASP-G73 on 06/12/2016.
  */
-public class Ingredient {
+public class Ingredient extends AbstractLightLover {
     private Integer id;
     private String name;
     private String linked_light;
@@ -51,5 +54,20 @@ public class Ingredient {
 
     public void setPicture_url(String picture_url) {
         this.picture_url = picture_url;
+    }
+
+    @Override
+    public void showHint() {
+        Light ingredientLight = this.lightRepo.getLight(getLinked_light());
+        try {
+            ingredientLight.turnOn();
+
+            //We keep the light open for 15 secondes
+            Thread.sleep(15000);
+
+            ingredientLight.turnOff();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
