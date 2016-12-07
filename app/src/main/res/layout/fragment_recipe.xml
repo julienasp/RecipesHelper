@@ -13,4 +13,8 @@
         tools:context="com.example.juasp_g73.recipeshelper.RecipeActivityFragment">
 
 
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true" android:id="@+id/textView_test" android:layout_alignParentTop="true"/>
 </RelativeLayout>

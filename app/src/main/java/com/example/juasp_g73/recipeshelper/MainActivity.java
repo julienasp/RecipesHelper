@@ -162,6 +162,10 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             nfcTagMsg = readText(ndefRecord);
                             Toast.makeText(this, "Recipe ID: " + nfcTagMsg, Toast.LENGTH_LONG ).show();
+
+                            Intent i = new Intent(getApplicationContext(), RecipeActivity.class);
+                            i.putExtra("recipe_id",nfcTagMsg);
+                            startActivity(i);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
