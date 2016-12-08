@@ -70,4 +70,9 @@ public class Ingredient extends AbstractLightLover {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " id: "+ getId() + ", name: " + getName();
+    }
 }

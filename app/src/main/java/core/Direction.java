@@ -89,4 +89,9 @@ public class Direction {
     public void setDirection_tools(Vector<Tool> direction_tools) {
         this.direction_tools = direction_tools;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " id: "+ getId() + ", recipeId: " + getRecipe_id() + ", order: " + getOrder() + ", description: " + getDescription() + ", direction_tools: " + getDirection_tools().toString() + ", direction_ingredients: " + getDirection_ingredients().toString() ;
+    }
 }

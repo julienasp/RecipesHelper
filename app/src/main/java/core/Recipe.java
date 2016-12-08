@@ -103,4 +103,9 @@ public class Recipe {
     public void setDirections(Vector<Direction> directions) {
         this.directions = directions;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " id: "+ getId() + ", description: " + getDescription() + ", Directions: " + getDirections().toString();
+    }
 }
