@@ -1,12 +1,13 @@
 package core;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Vector;
 
 /**
  * Created by JUASP-G73 on 06/12/2016.
  */
-public class Recipe {
+public class Recipe implements Serializable {
     private Integer id;
     private String name;
     private String description;

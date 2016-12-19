@@ -31,8 +31,7 @@ public class RecipeActivity extends AppCompatActivity {
         TextView tv_test = (TextView) findViewById(R.id.textView_test);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String recipe_id = extras.getString("recipe_id");
-            Recipe r = new RecipeDao().find(Integer.parseInt(recipe_id));
+            Recipe r = (Recipe) extras.getSerializable("recipe");
             Log.i("RecipeActivity","[Recipe#id:"+r.getId()+"] has " + r.getDirections().size() + " directions");
             for(Direction d : r.getDirections()){
                 Log.i("RecipeActivity","[Direction#id:" + d.getId() + "] has " + d.getDirection_ingredients().size() + " ingredients and has " + d.getDirection_tools().size() + " tools");

@@ -1,11 +1,12 @@
 package core;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Created by JUASP-G73 on 06/12/2016.
  */
-public class Direction {
+public class Direction implements Serializable {
     private Integer id;
     private Integer recipe_id;
     private Integer order;

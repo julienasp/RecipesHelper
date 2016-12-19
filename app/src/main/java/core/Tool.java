@@ -3,10 +3,12 @@ package core;
 import ca.usherbrooke.domus.lights.Light;
 import ca.usherbrooke.domus.lights.LightRepository;
 
+import java.io.Serializable;
+
 /**
  * Created by JUASP-G73 on 06/12/2016.
  */
-public class Tool extends AbstractLightLover {
+public class Tool extends AbstractLightLover implements Serializable {
     private Integer id;
     private String name;
     private String linked_light;
