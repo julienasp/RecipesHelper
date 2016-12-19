@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                             ProgressDialog progress = new ProgressDialog(this);
-                            progress.setMessage("Loading...");
+                            progress.setMessage("Loading the recipe...");
                             new RecipeDaoTasker(progress,Integer.parseInt(nfcTagMsg),this,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
 
                         } catch (UnsupportedEncodingException e) {

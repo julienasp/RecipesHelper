@@ -5,8 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import com.example.juasp_g73.recipeshelper.RecipeActivity;
 import core.Recipe;
+
+import java.text.DecimalFormat;
 
 /**
  * Created by JUASP-G73 on 18/12/2016.
@@ -17,6 +20,7 @@ public class RecipeDaoTasker extends AsyncTask<Void, Void, Void> {
     private Recipe currentRecipe;
     private Activity a;
     private Context c;
+    private long startTime;
 
     public RecipeDaoTasker(ProgressDialog progress, Integer recipeId, Activity a, Context c) {
         this.progress = progress;
@@ -32,6 +36,8 @@ public class RecipeDaoTasker extends AsyncTask<Void, Void, Void> {
     }
 
     public void onPreExecute() {
+        //Chrono start
+        this.startTime = System.nanoTime();
         progress.show();
     }
 
@@ -40,6 +46,8 @@ public class RecipeDaoTasker extends AsyncTask<Void, Void, Void> {
         Intent i = new Intent(c, RecipeActivity.class);
         i.putExtra("recipe",currentRecipe);
         a.startActivity(i);
+        long totalTime = System.nanoTime() - startTime;
+        Log.i("timer", "RecipeDaoTasker took: " + totalTime/1e6 + " ms.");
     }
 }
 
