@@ -2,10 +2,12 @@ package com.example.juasp_g73.recipeshelper;
 
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.nfc.*;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import dao.RecipeDaoTasker;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
@@ -163,6 +166,11 @@ public class MainActivity extends AppCompatActivity {
                             nfcTagMsg = readText(ndefRecord);
                             Toast.makeText(this, "Recipe ID: " + nfcTagMsg, Toast.LENGTH_LONG ).show();
 
+
+
+                            ProgressDialog progress = new ProgressDialog(this);
+                            progress.setMessage("Loading...");
+                            new RecipeDaoTasker(progress,Integer.parseInt(nfcTagMsg),this,this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null);
 
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
