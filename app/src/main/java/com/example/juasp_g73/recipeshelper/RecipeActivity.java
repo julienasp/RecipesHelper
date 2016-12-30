@@ -5,16 +5,19 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import org.javatuples.Pair;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import core.Direction;
+import core.Ingredient;
 import core.Recipe;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 
 public class RecipeActivity extends AppCompatActivity {
@@ -35,6 +38,7 @@ public class RecipeActivity extends AppCompatActivity {
         TextView recipe_nb_portions = (TextView) findViewById(R.id.recipe_nb_portions);
         TextView recipe_calories = (TextView) findViewById(R.id.recipe_calories);
         TextView recipe_time = (TextView) findViewById(R.id.recipe_time);
+        GridView recipe_ingrediets = (GridView) findViewById(R.id.recipe_ingredients);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -56,12 +60,21 @@ public class RecipeActivity extends AppCompatActivity {
                     r.getNb_portions() !=null &&
                     r.getCalories() != null &&
                     r.getCooking_time() != null &&
-                    r.getPreparation_time() != null  )
+                    r.getPreparation_time() != null )
             {
                 recipe_name.setText(r.getName());
                 recipe_description.setText(r.getDescription());
                 recipe_nb_portions.setText(r.getNb_portions().toString());
                 recipe_calories.setText(r.getCalories().toString());
+
+                if(generateIngredientsFromRecipe(r) != null){
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                            android.R.layout.test_list_item, generateIngredientsFromRecipe(r));
+
+                    recipe_ingrediets.setAdapter(adapter);
+                }
+                else recipe_ingrediets.setVisibility(View.INVISIBLE);
+
 
                 //Time manipulation because java.sql.time is poorly written
                 //To refactor into a function...
@@ -85,5 +98,16 @@ public class RecipeActivity extends AppCompatActivity {
             Log.i("recipeInvisible", recipe_time.getText().toString());
 
         }
+    }
+    private Vector<String> generateIngredientsFromRecipe(Recipe r){
+        Vector<String> ingredients = new Vector<>();
+
+        for(Direction d : r.getDirections() ){
+            for(Pair<Ingredient,String> p : d.getDirection_ingredients()){
+                ingredients.add(p.getValue1() + " of " + p.getValue0().getName() );
+            }
+        }
+
+        return ingredients;
     }
 }

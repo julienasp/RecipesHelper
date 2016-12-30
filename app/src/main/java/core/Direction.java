@@ -1,5 +1,9 @@
 package core;
 
+
+
+import org.javatuples.Pair;
+
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -13,7 +17,7 @@ public class Direction implements Serializable {
     private String description;
     private String video_url;
     private String image_url;
-    private Vector<Ingredient> direction_ingredients;
+    private Vector<Pair<Ingredient,String>> direction_ingredients;
     private Vector<Tool> direction_tools;
 
     public Direction(Integer id) {
@@ -75,11 +79,11 @@ public class Direction implements Serializable {
         this.image_url = image_url;
     }
 
-    public Vector<Ingredient> getDirection_ingredients() {
+    public Vector<Pair<Ingredient,String>> getDirection_ingredients() {
         return direction_ingredients;
     }
 
-    public void setDirection_ingredients(Vector<Ingredient> direction_ingredients) {
+    public void setDirection_ingredients(Vector<Pair<Ingredient,String>> direction_ingredients) {
         this.direction_ingredients = direction_ingredients;
     }
 

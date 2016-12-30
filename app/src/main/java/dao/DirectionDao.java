@@ -1,5 +1,6 @@
 package dao;
 
+import org.javatuples.Pair;
 import core.Direction;
 import core.Ingredient;
 import core.Tool;
@@ -48,7 +49,7 @@ public class DirectionDao extends AbstractDao<Direction> {
             direction.setDirection_tools(v_tools);
 
             //ingredients vector generation
-            Vector<Ingredient> v_ingredients = new Vector<>();
+            Vector<Pair<Ingredient,String>> v_ingredients = new Vector<>();
             ResultSet resultIngredients = this.connect
                     .createStatement(
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -57,7 +58,7 @@ public class DirectionDao extends AbstractDao<Direction> {
                             "SELECT * FROM direction_ingredients WHERE direction_id = " + id
                     );
             while (resultIngredients.next()) {
-                v_ingredients.add(new IngredientDao().find(resultIngredients.getInt("ingredient_id")));
+                v_ingredients.add(new Pair<Ingredient,String>(new IngredientDao().find(resultIngredients.getInt("ingredient_id")),resultIngredients.getString("quantity")));
             }
             //We add all the ingredients to the direction_ingredients variable
             direction.setDirection_ingredients(v_ingredients);
