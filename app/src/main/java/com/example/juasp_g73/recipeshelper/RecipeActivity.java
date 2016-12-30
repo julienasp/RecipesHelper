@@ -11,6 +11,11 @@ import com.squareup.picasso.Picasso;
 import core.Direction;
 import core.Recipe;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -57,16 +62,28 @@ public class RecipeActivity extends AppCompatActivity {
                 recipe_description.setText(r.getDescription());
                 recipe_nb_portions.setText(r.getNb_portions().toString());
                 recipe_calories.setText(r.getCalories().toString());
-                recipe_time.setText(Long.toString(r.getCooking_time().getTime() + r.getPreparation_time().getTime()));
+
+                //Time manipulation because java.sql.time is poorly written
+                //To refactor into a function...
+                Date datePrep = new Date(r.getPreparation_time().getTime());
+                Calendar calendarPreparationTime = GregorianCalendar.getInstance();
+                calendarPreparationTime.setTime(datePrep);
+
+                Date dateCooking = new Date(r.getCooking_time().getTime());
+                Calendar calendarTotalTime = GregorianCalendar.getInstance();
+                calendarTotalTime.setTime(dateCooking);
+                calendarTotalTime.set(Calendar.HOUR_OF_DAY,calendarTotalTime.get(Calendar.HOUR_OF_DAY) + calendarPreparationTime.get(Calendar.HOUR_OF_DAY));
+                calendarTotalTime.set(Calendar.MINUTE,calendarTotalTime.get(Calendar.MINUTE) + calendarPreparationTime.get(Calendar.MINUTE));
+                calendarTotalTime.set(Calendar.SECOND,calendarTotalTime.get(Calendar.SECOND) + calendarPreparationTime.get(Calendar.SECOND));
+
+                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+                recipe_time.setText(timeFormat.format(calendarTotalTime.getTime()));
             }
             Log.i("recipeInvisible", recipe_nb_portions.getText().toString());
-            Log.i("recipeInvisible", recipe_time.getText().toString());
             Log.i("recipeInvisible", recipe_calories.getText().toString());
-            Log.i("recipeInvisible", Long.toString(r.getCooking_time().getTime()));
-            Log.i("recipeInvisible", Long.toString(r.getPreparation_time().getTime()));
-            java.sql.Time Try = new java.sql.Time(r.getPreparation_time().getTime() + r.getCooking_time().getTime() );
+            Log.i("recipeInvisible", recipe_time.getText().toString());
 
-            Log.i("recipeInvisible", Try.toString());
         }
     }
 }
