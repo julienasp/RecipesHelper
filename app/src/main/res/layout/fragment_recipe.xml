@@ -19,12 +19,20 @@
             android:layout_alignParentStart="true">
 
         <ImageView
+                android:layout_width="27dp"
+                android:layout_row="4"
+                android:layout_column="4"
+                android:layout_gravity="left"
+                android:layout_height="23dp" app:srcCompat="@drawable/clock" android:id="@+id/iv_clock"/>
+        <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/recipehelperlogo"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_row="3"
+                android:layout_row="0"
+                android:layout_rowSpan="2"
+                android:layout_column="4"
                 android:id="@+id/recipe_image_url"/>
         <TextView
                 android:layout_height="wrap_content"
@@ -33,7 +41,7 @@
                 android:text="Recipe Name"
                 android:layout_row="0"
                 android:layout_column="0"
-        />
+                android:textAllCaps="true" android:textStyle="normal|bold"/>
         <TextView
                 android:text="Description"
                 android:layout_width="wrap_content"
@@ -42,8 +50,44 @@
                 android:layout_below="@+id/recipe_name"
                 android:layout_alignParentStart="true"
                 android:layout_row="1"
-                android:layout_column="0"
-                android:layout_rowSpan="2"/>
+                android:layout_column="0"/>
+        <TextView
+                android:text="Portions"
+                android:layout_row="2"
+                android:layout_column="4"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/recipe_nb_portions"/>
+        <TextView
+                android:text="Portions:"
+                android:layout_row="2"
+                android:layout_column="4"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/label_portions" android:textStyle="bold"/>
+        <TextView
+                android:text="Calories"
+                android:layout_row="3"
+                android:layout_column="4"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/recipe_calories"/>
+        <TextView
+                android:text="total time"
+                android:layout_row="4"
+                android:layout_column="4"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/recipe_time"/>
+        <TextView
+                android:text="Calories:"
+                android:layout_row="3"
+                android:layout_column="4"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/label_calories" android:textStyle="bold"/>
+
+
     </GridLayout>
 
 
