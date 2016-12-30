@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.juasp_g73.recipeshelper">
 
+
+
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature
@@ -27,7 +29,10 @@
         <activity
                 android:name=".RecipeActivity"
                 android:label="@string/title_activity_recipe"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="landscape"
+                android:configChanges="orientation|keyboardHidden"
+        >
         </activity>
     </application>
 
