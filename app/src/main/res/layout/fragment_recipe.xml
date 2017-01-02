@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"/>
 
-    <!-- RECIPE_NB_PORTIONS  -->
+    <!-- CLOCK ImageView -->
     <ImageView
             android:id="@+id/iv_clock"
             android:layout_width="27dp"
