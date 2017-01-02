@@ -36,7 +36,9 @@
         </activity>
         <activity
                 android:name=".DirectionActivity"
+                android:configChanges="orientation|keyboardHidden"
                 android:label="@string/title_activity_direction"
+                android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

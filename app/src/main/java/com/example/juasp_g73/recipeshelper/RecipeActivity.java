@@ -37,7 +37,7 @@ public class RecipeActivity extends AppCompatActivity {
         TextView recipe_nb_portions = (TextView) findViewById(R.id.recipe_nb_portions);
         TextView recipe_calories = (TextView) findViewById(R.id.recipe_calories);
         TextView recipe_time = (TextView) findViewById(R.id.recipe_time);
-        GridView recipe_ingrediets = (GridView) findViewById(R.id.recipe_ingredients);
+        GridView recipe_ingredients = (GridView) findViewById(R.id.recipe_ingredients);
         Button button_start = (Button) findViewById(R.id.button_start);
 
         Bundle extras = getIntent().getExtras();
@@ -67,13 +67,13 @@ public class RecipeActivity extends AppCompatActivity {
                 recipe_nb_portions.setText(r.getNb_portions().toString());
                 recipe_calories.setText(r.getCalories().toString());
 
-                if(generateIngredientsFromRecipe(r) != null){
+                if(generateIngredientsFromRecipe(r).size() > 0){
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                             android.R.layout.test_list_item, generateIngredientsFromRecipe(r));
 
-                    recipe_ingrediets.setAdapter(adapter);
+                    recipe_ingredients.setAdapter(adapter);
                 }
-                else recipe_ingrediets.setVisibility(View.INVISIBLE);
+                else recipe_ingredients.setVisibility(View.INVISIBLE);
 
 
                 //Time manipulation because java.sql.time is poorly written

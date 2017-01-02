@@ -74,6 +74,6 @@ public class Tool extends AbstractLightLover implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + " id: "+ getId() + ", name: " + getName();
+        return getName();
     }
 }
