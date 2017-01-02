@@ -30,6 +30,8 @@ public class DirectionActivity extends AppCompatActivity {
     private GridView direction_tools;
     private TextView tv_timer;
     private ImageView iv_timer;
+    private Button btn_previous;
+    private Button btn_next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class DirectionActivity extends AppCompatActivity {
         iv_item_image_url = (ImageView) findViewById(R.id.iv_item_image_url);
         tv_timer = (TextView) findViewById(R.id.tv_timer);
         iv_timer = (ImageView) findViewById(R.id.iv_timer);
+        btn_next = (Button) findViewById(R.id.button_next);
+        btn_previous = (Button) findViewById(R.id.button_previous);
 
         //direction_tools OnItemClickListener
         direction_tools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,6 +88,22 @@ public class DirectionActivity extends AppCompatActivity {
             }
         });
 
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stepIndex++;
+                hydrateView();
+            }
+        });
+
+        btn_previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stepIndex--;
+                hydrateView();
+            }
+        });
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -97,6 +117,11 @@ public class DirectionActivity extends AppCompatActivity {
 
     private void hydrateView() {
         if(r != null){
+
+            if(stepIndex > 0){
+                btn_previous.setVisibility(View.VISIBLE);
+            }else btn_previous.setVisibility(View.INVISIBLE);
+
             //Hydrating the interface
             try {
                 currentDirection = r.getDirections().get(stepIndex);
