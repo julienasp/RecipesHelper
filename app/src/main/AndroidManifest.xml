@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.juasp_g73.recipeshelper">
 
-
-
-    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.NFC"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-feature
             android:name="android.hardware.nfc"
-            android:required="true" />
+            android:required="true"/>
+
     <application
             android:allowBackup="true"
             android:icon="@drawable/recipehelperlogo"
@@ -22,17 +22,22 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT" />
+
+                <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
                 android:name=".RecipeActivity"
-                android:label="@string/title_activity_recipe"
-                android:theme="@style/AppTheme.NoActionBar"
-                android:screenOrientation="landscape"
                 android:configChanges="orientation|keyboardHidden"
-        >
+                android:label="@string/title_activity_recipe"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".DirectionActivity"
+                android:label="@string/title_activity_direction"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

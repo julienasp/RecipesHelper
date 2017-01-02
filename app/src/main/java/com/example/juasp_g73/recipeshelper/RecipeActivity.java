@@ -1,16 +1,15 @@
 package com.example.juasp_g73.recipeshelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.*;
 import org.javatuples.Pair;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import core.Direction;
 import core.Ingredient;
@@ -39,10 +38,11 @@ public class RecipeActivity extends AppCompatActivity {
         TextView recipe_calories = (TextView) findViewById(R.id.recipe_calories);
         TextView recipe_time = (TextView) findViewById(R.id.recipe_time);
         GridView recipe_ingrediets = (GridView) findViewById(R.id.recipe_ingredients);
+        Button button_start = (Button) findViewById(R.id.button_start);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Recipe r = (Recipe) extras.getSerializable("recipe");
+            final Recipe r = (Recipe) extras.getSerializable("recipe");
             Log.i("RecipeActivity","[Recipe#id:"+r.getId()+"] has " + r.getDirections().size() + " directions");
             for(Direction d : r.getDirections()){
                 Log.i("RecipeActivity","[Direction#id:" + d.getId() + "] has " + d.getDirection_ingredients().size() + " ingredients and has " + d.getDirection_tools().size() + " tools");
@@ -96,6 +96,17 @@ public class RecipeActivity extends AppCompatActivity {
             Log.i("recipeInvisible", recipe_nb_portions.getText().toString());
             Log.i("recipeInvisible", recipe_calories.getText().toString());
             Log.i("recipeInvisible", recipe_time.getText().toString());
+
+            //Listener to start the recipe directions
+            button_start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getApplicationContext(), DirectionActivity.class);
+                    i.putExtra("recipe",r);
+                    startActivity(i);
+                }
+            });
+
 
         }
     }
