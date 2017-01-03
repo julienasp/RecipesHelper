@@ -38,6 +38,7 @@ public class DirectionActivity extends AppCompatActivity {
     private Button btn_next;
     private Integer nbDirection = 0;
     private TextToSpeech tts;
+    private ImageButton ttsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class DirectionActivity extends AppCompatActivity {
         btn_previous = (Button) findViewById(R.id.button_previous);
         label_information = (TextView) findViewById(R.id.label_information);
         label_items = (TextView) findViewById(R.id.label_items);
-        ImageButton ttsButton = (ImageButton) findViewById(R.id.ttsbutton);
+        ttsButton = (ImageButton) findViewById(R.id.ttsbutton);
 
         tts=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -73,7 +74,18 @@ public class DirectionActivity extends AppCompatActivity {
         ttsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tts.speak(direction_description.getText(),TextToSpeech.QUEUE_FLUSH, null, null);
+                if(tts.isSpeaking()){
+                    tts.stop();
+                    Picasso.with(getApplicationContext())
+                            .load(R.drawable.tts)
+                            .into(ttsButton);
+                }
+                else {
+                    tts.speak(direction_description.getText(), TextToSpeech.QUEUE_FLUSH, null, null);
+                    Picasso.with(getApplicationContext())
+                            .load(R.drawable.notts)
+                            .into(ttsButton);
+                }
             }
         });
 
@@ -120,6 +132,9 @@ public class DirectionActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(tts !=null){
+                    tts.stop();
+                }
                 if(stepIndex == nbDirection - 1 ){
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
@@ -135,6 +150,9 @@ public class DirectionActivity extends AppCompatActivity {
         btn_previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(tts !=null){
+                    tts.stop();
+                }
                 stepIndex--;
                 hydrateView();
             }
@@ -154,6 +172,10 @@ public class DirectionActivity extends AppCompatActivity {
 
     private void hydrateView() {
         if(r != null){
+
+            Picasso.with(getApplicationContext())
+                    .load(R.drawable.tts)
+                    .into(ttsButton);
 
             if(stepIndex == nbDirection - 1){
                 btn_next.setText("Exit");
