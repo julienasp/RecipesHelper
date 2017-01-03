@@ -1,5 +1,6 @@
 package com.example.juasp_g73.recipeshelper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class DirectionActivity extends AppCompatActivity {
     private ImageView iv_timer;
     private Button btn_previous;
     private Button btn_next;
+    private Integer nbDirection = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +93,15 @@ public class DirectionActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stepIndex++;
-                hydrateView();
+                if(stepIndex == nbDirection - 1 ){
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                }
+                else{
+                    stepIndex++;
+                    hydrateView();
+                }
+
             }
         });
 
@@ -108,6 +117,7 @@ public class DirectionActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
              r = (Recipe) extras.getSerializable("recipe");
+             nbDirection = r.getDirections().size();
 
             Log.i("DirectionActivity","[Recipe#id:"+r.getId()+"] has " + r.getDirections().size() + " directions");
             hydrateView();
@@ -117,6 +127,10 @@ public class DirectionActivity extends AppCompatActivity {
 
     private void hydrateView() {
         if(r != null){
+
+            if(stepIndex == nbDirection - 1){
+                btn_next.setText("Exit");
+            }else btn_next.setText("Next");
 
             if(stepIndex > 0){
                 btn_previous.setVisibility(View.VISIBLE);
@@ -141,6 +155,7 @@ public class DirectionActivity extends AppCompatActivity {
 
                 //ingredient vector empty?
                 if(generateIngredientsFromDirection(currentDirection).size() > 0){
+                    direction_ingredients.setVisibility(View.VISIBLE);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                             android.R.layout.test_list_item, generateIngredientsFromDirection(currentDirection));
 
@@ -149,6 +164,7 @@ public class DirectionActivity extends AppCompatActivity {
 
                 //tool vector empty?
                 if(currentDirection.getDirection_tools().size() > 0){
+                    direction_tools.setVisibility(View.VISIBLE);
                     ArrayAdapter<Tool> adapter = new ArrayAdapter<>(this,
                             android.R.layout.test_list_item, currentDirection.getDirection_tools());
 
