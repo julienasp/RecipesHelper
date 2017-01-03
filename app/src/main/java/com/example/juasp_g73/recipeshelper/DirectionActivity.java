@@ -3,6 +3,7 @@ package com.example.juasp_g73.recipeshelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
@@ -25,6 +26,8 @@ public class DirectionActivity extends AppCompatActivity {
     private Direction currentDirection;
     private TextView direction_step;
     private TextView direction_description;
+    private TextView label_information;
+    private TextView label_items;
     private ImageView direction_image_url;
     private ImageView iv_item_image_url;
     private GridView direction_ingredients;
@@ -34,6 +37,7 @@ public class DirectionActivity extends AppCompatActivity {
     private Button btn_previous;
     private Button btn_next;
     private Integer nbDirection = 0;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,29 @@ public class DirectionActivity extends AppCompatActivity {
         iv_timer = (ImageView) findViewById(R.id.iv_timer);
         btn_next = (Button) findViewById(R.id.button_next);
         btn_previous = (Button) findViewById(R.id.button_previous);
+        label_information = (TextView) findViewById(R.id.label_information);
+        label_items = (TextView) findViewById(R.id.label_items);
+        ImageButton ttsButton = (ImageButton) findViewById(R.id.ttsbutton);
+
+        tts=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.CANADA);
+                }
+            }
+        });
+
+        ttsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tts.speak(direction_description.getText(),TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
+
+
+
+
 
         //direction_tools OnItemClickListener
         direction_tools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,10 +167,19 @@ public class DirectionActivity extends AppCompatActivity {
             try {
                 currentDirection = r.getDirections().get(stepIndex);
 
+                //Labels visibility conditions
+                if(generateIngredientsFromDirection(currentDirection).size() == 0 &&  currentDirection.getDirection_tools().size() == 0){
+                    label_information.setVisibility(View.INVISIBLE);
+                    label_items.setVisibility(View.INVISIBLE);
+                }else{
+                    label_information.setVisibility(View.VISIBLE);
+                    label_items.setVisibility(View.VISIBLE);
+                }
+
                 if(currentDirection.getImage_url() != null) {
-                    Picasso.with(this)
-                            .load(currentDirection.getImage_url())
-                            .into(direction_image_url);
+                Picasso.with(this)
+                        .load(currentDirection.getImage_url())
+                        .into(direction_image_url);
                 }
 
                 //attributes are not null?
@@ -184,5 +220,13 @@ public class DirectionActivity extends AppCompatActivity {
         }
 
         return ingredients;
+    }
+
+    public void onPause(){
+        if(tts !=null){
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onPause();
     }
 }
