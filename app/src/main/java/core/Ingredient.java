@@ -74,6 +74,16 @@ public class Ingredient extends AbstractLightLover implements Serializable {
     }
 
     @Override
+    public String getImage_url() {
+        return getPicture_url();
+    }
+
+    @Override
+    public void setImage_url(String url) {
+        setPicture_url(url);
+    }
+
+    @Override
     public String toString() {
         return super.toString() + " id: "+ getId() + ", name: " + getName();
     }

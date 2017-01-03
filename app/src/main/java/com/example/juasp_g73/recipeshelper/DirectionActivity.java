@@ -12,10 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.squareup.picasso.Picasso;
-import core.Direction;
-import core.Ingredient;
-import core.Recipe;
-import core.Tool;
+import core.*;
 import org.javatuples.Pair;
 
 import java.util.Locale;
@@ -104,47 +101,7 @@ public class DirectionActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Tool t = (Tool) direction_tools.getItemAtPosition(position);
-                if(t.getImage_url() != null) {
-                    Picasso.with(getApplicationContext())
-                            .load(t.getImage_url())
-                            .resize(50, 50)
-                            .centerCrop()
-                            .into(iv_item_image_url);
-                }else{
-                    Picasso.with(getApplicationContext())
-                            .load(R.drawable.phototbd)
-                            .resize(50, 50)
-                            .centerCrop()
-                            .into(iv_item_image_url);
-                }
-
-                iv_item_image_url.setVisibility(View.VISIBLE);
-
-                new AsyncTask<Tool, Void, Void>() {
-                    protected Void doInBackground(Tool... params) {
-                        // Background Code
-                        Tool t = params[0];
-                        t.showHint();
-                        return null;
-                    }
-                }.execute(t);
-
-                iv_timer.setVisibility(View.VISIBLE);
-                tv_timer.setVisibility(View.VISIBLE);
-                new CountDownTimer(15000, 1000) {
-
-                    public void onTick(long millisUntilFinished) {
-                        tv_timer.setText("seconds remaining: " + millisUntilFinished / 1000);
-                    }
-
-                    public void onFinish() {
-                        tv_timer.setText("");
-                        tv_timer.setVisibility(View.INVISIBLE);
-                        iv_timer.setVisibility(View.INVISIBLE);
-                        iv_item_image_url.setVisibility(View.INVISIBLE);
-                    }
-                }.start();
-
+                showHint(t);
             }
         });
 
@@ -253,6 +210,49 @@ public class DirectionActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    private void showHint(AbstractLightLover ll){
+
+        if(ll.getImage_url() != null) {
+            Picasso.with(getApplicationContext())
+                    .load(ll.getImage_url())
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(iv_item_image_url);
+        }else{
+            Picasso.with(getApplicationContext())
+                    .load(R.drawable.phototbd)
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(iv_item_image_url);
+        }
+
+        iv_item_image_url.setVisibility(View.VISIBLE);
+
+        new AsyncTask<AbstractLightLover, Void, Void>() {
+            protected Void doInBackground(AbstractLightLover... params) {
+                // Background Code
+                AbstractLightLover t = params[0];
+                t.showHint();
+                return null;
+            }
+        }.execute(ll);
+
+        iv_timer.setVisibility(View.VISIBLE);
+        tv_timer.setVisibility(View.VISIBLE);
+        new CountDownTimer(15000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tv_timer.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                tv_timer.setText("");
+                tv_timer.setVisibility(View.INVISIBLE);
+                iv_timer.setVisibility(View.INVISIBLE);
+                iv_item_image_url.setVisibility(View.INVISIBLE);
+            }
+        }.start();
     }
 
     private Vector<String> generateIngredientsFromDirection(Direction d){
