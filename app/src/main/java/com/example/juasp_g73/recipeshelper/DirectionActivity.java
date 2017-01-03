@@ -1,5 +1,6 @@
 package com.example.juasp_g73.recipeshelper;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -9,7 +10,6 @@ import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.squareup.picasso.Picasso;
@@ -41,6 +41,7 @@ public class DirectionActivity extends AppCompatActivity {
     private Integer nbDirection = 0;
     private TextToSpeech tts;
     private ImageButton ttsButton;
+    private Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class DirectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_direction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ctx = this;
 
         /***************************************************/
         /***********    INTERFACE BINDING   ****************/
@@ -163,7 +165,7 @@ public class DirectionActivity extends AppCompatActivity {
     private void hydrateView() {
         if(r != null){
 
-            Picasso.with(getApplicationContext())
+            Picasso.with(ctx)
                     .load(R.drawable.tts)
                     .into(ttsButton);
 
@@ -193,7 +195,7 @@ public class DirectionActivity extends AppCompatActivity {
                 }
 
                 if(currentDirection.getImage_url() != null) {
-                Picasso.with(this)
+                Picasso.with(ctx)
                         .load(currentDirection.getImage_url())
                         .into(direction_image_url);
                 }
@@ -230,13 +232,13 @@ public class DirectionActivity extends AppCompatActivity {
     private void showHint(AbstractLightLover ll){
 
         if(ll.getImage_url() != null) {
-            Picasso.with(getApplicationContext())
+            Picasso.with(ctx)
                     .load(ll.getImage_url())
                     .resize(50, 50)
                     .centerCrop()
                     .into(iv_item_image_url);
         }else{
-            Picasso.with(getApplicationContext())
+            Picasso.with(ctx)
                     .load(R.drawable.phototbd)
                     .resize(50, 50)
                     .centerCrop()
