@@ -105,6 +105,15 @@ public class DirectionActivity extends AppCompatActivity {
             }
         });
 
+        //direction_ingredients OnItemClickListener
+        direction_ingredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PairIngredientString p = (PairIngredientString) direction_ingredients.getItemAtPosition(position);
+                showHint(p.getP().getValue0());
+            }
+        });
+
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +201,7 @@ public class DirectionActivity extends AppCompatActivity {
                 //ingredient vector empty?
                 if(generateIngredientsFromDirection(currentDirection).size() > 0){
                     direction_ingredients.setVisibility(View.VISIBLE);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    ArrayAdapter<PairIngredientString> adapter = new ArrayAdapter<>(this,
                             android.R.layout.test_list_item, generateIngredientsFromDirection(currentDirection));
 
                     direction_ingredients.setAdapter(adapter);
@@ -255,11 +264,11 @@ public class DirectionActivity extends AppCompatActivity {
         }.start();
     }
 
-    private Vector<String> generateIngredientsFromDirection(Direction d){
-        Vector<String> ingredients = new Vector<>();
+    private Vector<PairIngredientString> generateIngredientsFromDirection(Direction d){
+        Vector<PairIngredientString> ingredients = new Vector<>();
 
         for(Pair<Ingredient,String> p : d.getDirection_ingredients()){
-            ingredients.add(p.getValue1() + " of " + p.getValue0().getName() );
+            ingredients.add(new PairIngredientString(p));
         }
 
         return ingredients;
