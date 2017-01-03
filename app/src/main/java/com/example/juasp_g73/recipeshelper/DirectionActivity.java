@@ -1,6 +1,7 @@
 package com.example.juasp_g73.recipeshelper;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
@@ -101,6 +102,8 @@ public class DirectionActivity extends AppCompatActivity {
                 if(t.getImage_url() != null) {
                     Picasso.with(getApplicationContext())
                             .load(t.getImage_url())
+                            .resize(50, 50)
+                            .centerCrop()
                             .into(iv_item_image_url);
                 }else{
                     Picasso.with(getApplicationContext())
@@ -109,7 +112,18 @@ public class DirectionActivity extends AppCompatActivity {
                             .centerCrop()
                             .into(iv_item_image_url);
                 }
-                t.showHint();
+
+                iv_item_image_url.setVisibility(View.VISIBLE);
+
+                new AsyncTask<Tool, Void, Void>() {
+                    protected Void doInBackground(Tool... params) {
+                        // Background Code
+                        Tool t = params[0];
+                        t.showHint();
+                        return null;
+                    }
+                }.execute(t);
+
                 iv_timer.setVisibility(View.VISIBLE);
                 tv_timer.setVisibility(View.VISIBLE);
                 new CountDownTimer(15000, 1000) {
