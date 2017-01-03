@@ -1,6 +1,7 @@
 package com.example.juasp_g73.recipeshelper;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -125,6 +126,7 @@ public class DirectionActivity extends AppCompatActivity {
                     startActivity(i);
                 }
                 else{
+                    direction_description.scrollTo(0,0);
                     stepIndex++;
                     hydrateView();
                 }
@@ -138,6 +140,7 @@ public class DirectionActivity extends AppCompatActivity {
                 if(tts !=null){
                     tts.stop();
                 }
+                direction_description.scrollTo(0,0);
                 stepIndex--;
                 hydrateView();
             }
@@ -166,7 +169,11 @@ public class DirectionActivity extends AppCompatActivity {
 
             if(stepIndex == nbDirection - 1){
                 btn_next.setText("Exit");
-            }else btn_next.setText("Next");
+                btn_next.setBackgroundColor(Color.RED);
+            }else {
+                btn_next.setText("Next");
+                btn_next.setBackgroundResource(android.R.color.holo_green_light);
+            }
 
             if(stepIndex > 0){
                 btn_previous.setVisibility(View.VISIBLE);
