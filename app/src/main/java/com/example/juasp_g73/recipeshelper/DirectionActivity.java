@@ -197,6 +197,7 @@ public class DirectionActivity extends AppCompatActivity {
                 if(currentDirection.getImage_url() != null) {
                 Picasso.with(ctx)
                         .load(currentDirection.getImage_url())
+                        .placeholder( R.drawable.animation_progress)
                         .into(direction_image_url);
                 }
 
