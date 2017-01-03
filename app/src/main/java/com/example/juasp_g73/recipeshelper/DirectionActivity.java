@@ -22,6 +22,9 @@ import java.util.Locale;
 import java.util.Vector;
 
 public class DirectionActivity extends AppCompatActivity {
+    /***************************************************/
+    /***********    PRIVATE ATTRIBUTES   ***************/
+    /***************************************************/
     private Recipe r;
     private int stepIndex = 0;
     private Direction currentDirection;
@@ -48,6 +51,9 @@ public class DirectionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /***************************************************/
+        /***********    INTERFACE BINDING   ****************/
+        /***************************************************/
         direction_step = (TextView) findViewById(R.id.direction_step);
         direction_description = (TextView) findViewById(R.id.direction_description);
         direction_image_url = (ImageView) findViewById(R.id.direction_image_url);
@@ -63,6 +69,9 @@ public class DirectionActivity extends AppCompatActivity {
         label_items = (TextView) findViewById(R.id.label_items);
         ttsButton = (ImageButton) findViewById(R.id.ttsbutton);
 
+        /***************************************************/
+        /***************    LISTENERS   ********************/
+        /***************************************************/
         tts=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -89,10 +98,6 @@ public class DirectionActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
 
         //direction_tools OnItemClickListener
         direction_tools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -173,13 +178,15 @@ public class DirectionActivity extends AppCompatActivity {
         });
 
 
+        /***************************************************/
+        /*********    INITIAL HYDRATION   ****************/
+        /***************************************************/
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
              r = (Recipe) extras.getSerializable("recipe");
              nbDirection = r.getDirections().size();
-
-            Log.i("DirectionActivity","[Recipe#id:"+r.getId()+"] has " + r.getDirections().size() + " directions");
-            hydrateView();
+             hydrateView();
         }
 
     }
