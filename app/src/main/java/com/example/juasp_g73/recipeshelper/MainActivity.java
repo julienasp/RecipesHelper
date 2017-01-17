@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                     if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
                         try {
                             nfcTagMsg = readText(ndefRecord);
-                            Toast.makeText(this, "Recipe ID: " + nfcTagMsg, Toast.LENGTH_LONG ).show();
+                            Toast.makeText(this, "Recipe ID: " + nfcTagMsg, Toast.LENGTH_SHORT ).show();
 
 
 
