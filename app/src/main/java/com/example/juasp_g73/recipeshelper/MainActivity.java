@@ -150,6 +150,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop(){
+        unregisterReceiver(mReceiver);
+        super.onStop();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent){
         if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())){
             String nfcTagMsg;

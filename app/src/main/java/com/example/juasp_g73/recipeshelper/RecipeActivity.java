@@ -52,6 +52,8 @@ public class RecipeActivity extends AppCompatActivity {
             if(r.getImage_url() != null) {
                 Picasso.with(this)
                         .load(r.getImage_url())
+                        .resize(250, 250)
+                        .centerInside()
                         .into(recipe_image_url);
             }
             //Make sure we have the whole recipe
@@ -64,8 +66,8 @@ public class RecipeActivity extends AppCompatActivity {
             {
                 recipe_name.setText(r.getName());
                 recipe_description.setText(r.getDescription());
-                recipe_nb_portions.setText(r.getNb_portions().toString());
-                recipe_calories.setText(r.getCalories().toString());
+                recipe_nb_portions.setText(String.valueOf(r.getNb_portions()));
+                recipe_calories.setText(String.valueOf(r.getCalories()));
 
                 if(generateIngredientsFromRecipe(r).size() > 0){
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
