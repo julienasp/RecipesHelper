@@ -3,21 +3,39 @@ package com.example.juasp_g73.recipeshelper;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.*;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
-import core.*;
+
 import org.javatuples.Pair;
 
 import java.util.Locale;
 import java.util.Vector;
+
+import core.AbstractLightLover;
+import core.Direction;
+import core.Ingredient;
+import core.PairIngredientString;
+import core.Recipe;
+import core.Tool;
 
 public class DirectionActivity extends AppCompatActivity {
     /***************************************************/
@@ -42,6 +60,9 @@ public class DirectionActivity extends AppCompatActivity {
     private TextToSpeech tts;
     private ImageButton ttsButton;
     private Context ctx;
+    private PopupWindow mPopupWindow;
+    private GridView glFragment;
+    private Boolean popUpOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +89,7 @@ public class DirectionActivity extends AppCompatActivity {
         label_information = (TextView) findViewById(R.id.label_information);
         label_items = (TextView) findViewById(R.id.label_items);
         ttsButton = (ImageButton) findViewById(R.id.ttsbutton);
+        glFragment = (GridView) findViewById(R.id.content_recipe);
 
         /***************************************************/
         /***************    LISTENERS   ********************/
@@ -103,8 +125,12 @@ public class DirectionActivity extends AppCompatActivity {
         direction_tools.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Tool t = (Tool) direction_tools.getItemAtPosition(position);
-                showHint(t);
+                if(!popUpOpen) {
+                    Tool tool = (Tool) direction_tools.getItemAtPosition(position);
+                    showHint(tool);
+                    popUpOpen = true;
+                }
+
             }
         });
 
@@ -112,8 +138,10 @@ public class DirectionActivity extends AppCompatActivity {
         direction_ingredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PairIngredientString p = (PairIngredientString) direction_ingredients.getItemAtPosition(position);
-                showHint(p.getP().getValue0());
+                if(!popUpOpen) {
+                    PairIngredientString p = (PairIngredientString) direction_ingredients.getItemAtPosition(position);
+                    showHint(p.getP().getValue0());
+                }
             }
         });
 
@@ -156,8 +184,10 @@ public class DirectionActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
              r = (Recipe) extras.getSerializable("recipe");
-             nbDirection = r.getDirections().size();
-             hydrateView();
+            if (r != null) {
+                nbDirection = r.getDirections().size();
+            }
+            hydrateView();
         }
 
     }
@@ -170,10 +200,10 @@ public class DirectionActivity extends AppCompatActivity {
                     .into(ttsButton);
 
             if(stepIndex == nbDirection - 1){
-                btn_next.setText("Exit");
+                btn_next.setText(R.string.exit);
                 btn_next.setBackgroundColor(Color.RED);
             }else {
-                btn_next.setText("Next");
+                btn_next.setText(R.string.next);
                 btn_next.setBackgroundResource(android.R.color.holo_green_light);
             }
 
@@ -204,7 +234,7 @@ public class DirectionActivity extends AppCompatActivity {
                 //attributes are not null?
                 if (  currentDirection.getOrder() != null && currentDirection.getDescription() != null )
                 {
-                    direction_step.setText(String.format("step #%d", currentDirection.getOrder()).toUpperCase(Locale.getDefault()));
+                    direction_step.setText(String.format(Locale.CANADA, "step #%d", currentDirection.getOrder()).toUpperCase(Locale.getDefault()));
                     direction_description.setText(currentDirection.getDescription());
                 }
 
@@ -230,23 +260,22 @@ public class DirectionActivity extends AppCompatActivity {
             }
         }
     }
-    private void showHint(AbstractLightLover ll){
+    private void showHint(final AbstractLightLover ll){
+
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View customView = inflater.inflate(R.layout.popup, null);
+        ImageView iv = (ImageView) customView.findViewById(R.id.iv_image);
+        TextView tv = (TextView) customView.findViewById(R.id.txt_item);
 
         if(ll.getImage_url() != null) {
             Picasso.with(ctx)
                     .load(ll.getImage_url())
-                    .resize(50, 50)
-                    .centerCrop()
-                    .into(iv_item_image_url);
-        }else{
-            Picasso.with(ctx)
-                    .load(R.drawable.phototbd)
-                    .resize(50, 50)
-                    .centerCrop()
-                    .into(iv_item_image_url);
+                    .resize(500,500)
+                    .centerInside()
+                    .into(iv);
         }
-
-        iv_item_image_url.setVisibility(View.VISIBLE);
+        tv.setText(ll.getName());
+        tv.setTextSize(15);
 
         new AsyncTask<AbstractLightLover, Void, Void>() {
             protected Void doInBackground(AbstractLightLover... params) {
@@ -257,21 +286,35 @@ public class DirectionActivity extends AppCompatActivity {
             }
         }.execute(ll);
 
-        iv_timer.setVisibility(View.VISIBLE);
-        tv_timer.setVisibility(View.VISIBLE);
-        new CountDownTimer(15000, 1000) {
+        // Initialize a new instance of popup window
+        mPopupWindow = new PopupWindow(
+                customView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        mPopupWindow.setElevation(5.0f);
+        mPopupWindow.setOutsideTouchable(false);
+        mPopupWindow.setBackgroundDrawable(getResources().getDrawable(android.R.color.transparent));
 
-            public void onTick(long millisUntilFinished) {
-                tv_timer.setText("seconds remaining: " + millisUntilFinished / 1000);
-            }
+        Button closeButton = (Button) customView.findViewById(R.id.close);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AsyncTask<AbstractLightLover, Void, Void>() {
+                    protected Void doInBackground(AbstractLightLover... params) {
+                        AbstractLightLover t = params[0];
+                        t.dismissHint();
+                        return null;
+                    }
+                }.execute(ll);
 
-            public void onFinish() {
-                tv_timer.setText("");
-                tv_timer.setVisibility(View.INVISIBLE);
-                iv_timer.setVisibility(View.INVISIBLE);
-                iv_item_image_url.setVisibility(View.INVISIBLE);
+                popUpOpen = false;
+                mPopupWindow.dismiss();
             }
-        }.start();
+        });
+
+        mPopupWindow.showAtLocation(direction_description, Gravity.CENTER,0,0);
+
     }
 
     private Vector<PairIngredientString> generateIngredientsFromDirection(Direction d){

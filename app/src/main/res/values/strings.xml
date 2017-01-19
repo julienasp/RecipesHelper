@@ -17,4 +17,9 @@
     <string name="time_needed">Time needed</string>
     <string name="total_time">total time</string>
     <string name="start">Start</string>
+    <string name="item_location">Item location</string>
+    <string name="close">Close</string>
+    <string name="picture_of_the_item">Picture of the item</string>
+    <string name="exit">Exit</string>
+    <string name="next">Next</string>
 </resources>

@@ -60,16 +60,13 @@ public class Tool extends AbstractLightLover implements Serializable {
     @Override
     public void showHint() {
         Light toolLight = this.lightRepo.getLight(getLinked_light());
-        try {
-            toolLight.turnOn();
+        toolLight.turnOn();
+    }
 
-            //We keep the light open for 15 secondes
-            Thread.sleep(15000);
-
-            toolLight.turnOff();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void dismissHint() {
+        Light toolLight = this.lightRepo.getLight(getLinked_light());
+        toolLight.turnOff();
     }
 
     @Override
