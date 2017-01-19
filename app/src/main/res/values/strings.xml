@@ -22,4 +22,6 @@
     <string name="picture_of_the_item">Picture of the item</string>
     <string name="exit">Exit</string>
     <string name="next">Next</string>
+    <string name="turnNFCon">Please turn on your phone\'s NFC functionnality!</string>
+    <string name="canScan">You can scan the NFC recipe tag!</string>
 </resources>
