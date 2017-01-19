@@ -24,4 +24,10 @@
     <string name="next">Next</string>
     <string name="turnNFCon">Please turn on your phone\'s NFC functionnality!</string>
     <string name="canScan">You can scan the NFC recipe tag!</string>
+    <string name="step">STEP #</string>
+    <string name="for_this_step_you_will_need">For this step you will need:</string>
+    <string name="click_on_an_item_to_reveal_it">(CLICK ON AN ITEM TO REVEAL IT)</string>
+    <string name="previous">previous</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="tools">Tools</string>
 </resources>
