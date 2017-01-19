@@ -3,7 +3,6 @@ package com.example.juasp_g73.recipeshelper;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -43,17 +42,13 @@ public class DirectionActivity extends AppCompatActivity {
     /***************************************************/
     private Recipe r;
     private int stepIndex = 0;
-    private Direction currentDirection;
     private TextView direction_step;
     private TextView direction_description;
     private TextView label_information;
     private TextView label_items;
     private ImageView direction_image_url;
-    private ImageView iv_item_image_url;
     private GridView direction_ingredients;
     private GridView direction_tools;
-    private TextView tv_timer;
-    private ImageView iv_timer;
     private Button btn_previous;
     private Button btn_next;
     private Integer nbDirection = 0;
@@ -61,7 +56,6 @@ public class DirectionActivity extends AppCompatActivity {
     private ImageButton ttsButton;
     private Context ctx;
     private PopupWindow mPopupWindow;
-    private GridView glFragment;
     private Boolean popUpOpen = false;
 
     @Override
@@ -81,15 +75,11 @@ public class DirectionActivity extends AppCompatActivity {
         direction_ingredients = (GridView) findViewById(R.id.direction_ingredients);
         direction_tools = (GridView) findViewById(R.id.direction_tools);
         direction_description.setMovementMethod(new ScrollingMovementMethod());
-        iv_item_image_url = (ImageView) findViewById(R.id.iv_item_image_url);
-        tv_timer = (TextView) findViewById(R.id.tv_timer);
-        iv_timer = (ImageView) findViewById(R.id.iv_timer);
         btn_next = (Button) findViewById(R.id.button_next);
         btn_previous = (Button) findViewById(R.id.button_previous);
         label_information = (TextView) findViewById(R.id.label_information);
         label_items = (TextView) findViewById(R.id.label_items);
         ttsButton = (ImageButton) findViewById(R.id.ttsbutton);
-        glFragment = (GridView) findViewById(R.id.content_recipe);
 
         /***************************************************/
         /***************    LISTENERS   ********************/
@@ -128,7 +118,6 @@ public class DirectionActivity extends AppCompatActivity {
                 if(!popUpOpen) {
                     Tool tool = (Tool) direction_tools.getItemAtPosition(position);
                     showHint(tool);
-                    popUpOpen = true;
                 }
 
             }
@@ -213,7 +202,7 @@ public class DirectionActivity extends AppCompatActivity {
 
             //Hydrating the interface
             try {
-                currentDirection = r.getDirections().get(stepIndex);
+                Direction currentDirection = r.getDirections().get(stepIndex);
 
                 //Labels visibility conditions
                 if(generateIngredientsFromDirection(currentDirection).size() == 0 &&  currentDirection.getDirection_tools().size() == 0){
@@ -261,11 +250,12 @@ public class DirectionActivity extends AppCompatActivity {
         }
     }
     private void showHint(final AbstractLightLover ll){
-
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.popup, null);
         ImageView iv = (ImageView) customView.findViewById(R.id.iv_image);
         TextView tv = (TextView) customView.findViewById(R.id.txt_item);
+
+        popUpOpen = true;
 
         if(ll.getImage_url() != null) {
             Picasso.with(ctx)
@@ -294,7 +284,6 @@ public class DirectionActivity extends AppCompatActivity {
         );
         mPopupWindow.setElevation(5.0f);
         mPopupWindow.setOutsideTouchable(false);
-        mPopupWindow.setBackgroundDrawable(getResources().getDrawable(android.R.color.transparent));
 
         Button closeButton = (Button) customView.findViewById(R.id.close);
         closeButton.setOnClickListener(new View.OnClickListener() {
