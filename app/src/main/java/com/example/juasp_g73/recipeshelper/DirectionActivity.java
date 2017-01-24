@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
@@ -57,6 +58,7 @@ public class DirectionActivity extends AppCompatActivity {
     private Context ctx;
     private PopupWindow mPopupWindow;
     private Boolean popUpOpen = false;
+    private String currentImageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,11 @@ public class DirectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_direction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
         ctx = this;
 
         /***************************************************/
@@ -165,6 +172,50 @@ public class DirectionActivity extends AppCompatActivity {
             }
         });
 
+        direction_image_url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!popUpOpen){
+                    LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View customView = inflater.inflate(R.layout.popup, null);
+                    ImageView iv = (ImageView) customView.findViewById(R.id.iv_image);
+                    TextView tv = (TextView) customView.findViewById(R.id.txt_item);
+
+                    tv.setText(R.string.detailled_view);
+
+                    popUpOpen = true;
+
+                    if(currentImageUrl != null) {
+                        Picasso.with(ctx)
+                                .load(currentImageUrl)
+                                .resize(700,700)
+                                .centerInside()
+                                .placeholder( R.drawable.animation_progress)
+                                .into(iv);
+                    }
+
+                    mPopupWindow = new PopupWindow(
+                            customView,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    );
+                    mPopupWindow.setElevation(5.0f);
+                    mPopupWindow.setOutsideTouchable(false);
+
+                    Button closeButton = (Button) customView.findViewById(R.id.close);
+                    closeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            popUpOpen = false;
+                            mPopupWindow.dismiss();
+                        }
+                    });
+
+                    mPopupWindow.showAtLocation(direction_description, Gravity.CENTER,0,0);
+                }
+            }
+        });
+
 
         /***************************************************/
         /*********    INITIAL HYDRATION   ****************/
@@ -203,6 +254,7 @@ public class DirectionActivity extends AppCompatActivity {
             //Hydrating the interface
             try {
                 Direction currentDirection = r.getDirections().get(stepIndex);
+                currentImageUrl = currentDirection.getImage_url();
 
                 //Labels visibility conditions
                 if(generateIngredientsFromDirection(currentDirection).size() == 0 &&  currentDirection.getDirection_tools().size() == 0){
@@ -223,7 +275,7 @@ public class DirectionActivity extends AppCompatActivity {
                 //attributes are not null?
                 if (  currentDirection.getOrder() != null && currentDirection.getDescription() != null )
                 {
-                    direction_step.setText(String.format(Locale.CANADA, "step #%d", currentDirection.getOrder()).toUpperCase(Locale.getDefault()));
+                    direction_step.setText(String.format(Locale.CANADA, "step #%d of %d", currentDirection.getOrder(), r.getDirections().size()).toUpperCase(Locale.getDefault()));
                     direction_description.setText(currentDirection.getDescription());
                 }
 
@@ -262,6 +314,7 @@ public class DirectionActivity extends AppCompatActivity {
                     .load(ll.getImage_url())
                     .resize(500,500)
                     .centerInside()
+                    .placeholder( R.drawable.animation_progress)
                     .into(iv);
         }
         tv.setText(ll.getName());

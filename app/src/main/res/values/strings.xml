@@ -30,4 +30,5 @@
     <string name="previous">previous</string>
     <string name="ingredients">Ingredients</string>
     <string name="tools">Tools</string>
+    <string name="detailled_view">Detailled view</string>
 </resources>
