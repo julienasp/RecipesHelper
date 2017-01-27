@@ -61,16 +61,13 @@ public class Ingredient extends AbstractLightLover implements Serializable {
     @Override
     public void showHint() {
         Light ingredientLight = this.lightRepo.getLight(getLinked_light());
-        try {
-            ingredientLight.turnOn();
+        ingredientLight.turnOn();
+    }
 
-            //We keep the light open for 15 secondes
-            Thread.sleep(15000);
-
-            ingredientLight.turnOff();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void dismissHint() {
+        Light ingredientLight = this.lightRepo.getLight(getLinked_light());
+        ingredientLight.turnOff();
     }
 
     @Override

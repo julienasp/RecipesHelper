@@ -6,4 +6,29 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_direction">DirectionActivity</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="description">Description</string>
+    <string name="you_will_need">You will need:</string>
+    <string name="meal_picture">Meal picture</string>
+    <string name="portions">Portions:</string>
+    <string name="portions_number">Portions</string>
+    <string name="calories">Calories:</string>
+    <string name="calories_number">Calories</string>
+    <string name="time_needed">Time needed</string>
+    <string name="total_time">total time</string>
+    <string name="start">Start</string>
+    <string name="item_location">Item location</string>
+    <string name="close">Close</string>
+    <string name="picture_of_the_item">Picture of the item</string>
+    <string name="exit">Exit</string>
+    <string name="next">Next</string>
+    <string name="turnNFCon">Please turn on your phone\'s NFC functionnality!</string>
+    <string name="canScan">You can scan the NFC recipe tag!</string>
+    <string name="step">STEP #</string>
+    <string name="for_this_step_you_will_need">For this step you will need:</string>
+    <string name="click_on_an_item_to_reveal_it">(CLICK ON AN ITEM TO REVEAL IT)</string>
+    <string name="previous">previous</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="tools">Tools</string>
+    <string name="detailled_view">Detailled view</string>
 </resources>
