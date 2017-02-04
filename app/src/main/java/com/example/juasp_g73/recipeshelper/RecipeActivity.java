@@ -30,7 +30,13 @@ import core.Tool;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
+/**
+* RecipeActivity is the activity that shows the compress informations about a recipe
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class RecipeActivity extends AppCompatActivity {
 
     private Boolean popUpOpen = false;
