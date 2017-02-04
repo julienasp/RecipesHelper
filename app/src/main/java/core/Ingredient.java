@@ -7,8 +7,15 @@ import ca.usherbrooke.domus.lights.LightRepository;
 import java.io.Serializable;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* Ingredient is POJO Plain old java object.
+* It's basically a container of data for an ingredient.
+* It has no behaviour, no parent and no implementation.
+* It's only used as a JavaBean for the UI.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class Ingredient extends AbstractLightLover implements Serializable {
     private Integer id;
     private String name;
