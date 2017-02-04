@@ -26,8 +26,8 @@ Utilise l'internet des objets et la technologie NFC.
 - [X] Ajouter une forme de progression pour le téléchargement des images via picasso 
 - [X] Tester au Labo
 - [ ] Réusiner le code 
-- [ ] Ajouter des commentaires
-- [ ] Ajouter de la documentation JavaDoc
+- [X] Ajouter des commentaires
+- [X] Ajouter de la documentation JavaDoc
 - [ ] Déplacer les données dans une classe Application
 
 
