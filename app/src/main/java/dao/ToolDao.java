@@ -6,10 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* ToolDao is a child of AbstractDao<Direction>, this class help us find a tool in the database.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class ToolDao extends AbstractDao<Tool> {
 
+   /**
+   * This method is used to get the instance of a specific tool given an id  
+   * @param id is the id how the object we are looking for
+   * @return Tool it returns a tool object with all his attributes.
+   */
     @Override
     public Tool find(Integer id) {
         Tool tool = new Tool(id);
