@@ -8,10 +8,18 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* RecipeDao is a child of AbstractDao<Direction>, this class help us find a recipe in the database.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class RecipeDao extends AbstractDao<Recipe> {
 
+   /**
+   * This method is used to get the instance of a specific Recipe given an id  
+   * @return Recipe it returns a Recipe object with all his attributes.
+   */
     @Override
     public Recipe find(Integer id) {
 
