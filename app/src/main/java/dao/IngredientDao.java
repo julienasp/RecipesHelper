@@ -7,10 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* IngredientDao is a child of AbstractDao<Direction>, this class help us find an ingredient in the database.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class IngredientDao extends AbstractDao<Ingredient> {
 
+    /**
+   * This method is used to get the instance of a specific Ingredient given an id  
+   * @return Ingredient it returns an Ingredient object with all his attributes.
+   */
     @Override
     public Ingredient find(Integer id) {
         Ingredient ingredient = new Ingredient(id);
