@@ -7,10 +7,10 @@ import ca.usherbrooke.domus.lights.LightRepository;
 import java.io.Serializable;
 
 /**
-* Ingredient is POJO Plain old java object.
-* It's basically a container of data for an ingredient.
-* It has no behaviour, no parent and no implementation.
+* Ingredient is POJO Plain old java object with only one behaviour.
+* It's basically a container of data for a tool.
 * It's only used as a JavaBean for the UI.
+* Ingredient also extends a method from AbstractLightLover, so he can be directily bind with a light from the DOMUS API.
 *
 * @author  Julien Aspirot
 * @version 1.0
@@ -65,12 +65,22 @@ public class Ingredient extends AbstractLightLover implements Serializable {
         this.picture_url = picture_url;
     }
 
+    
+   /**
+   * This method is used to activate the Light who's binded with the curent tool 
+   *
+   */
     @Override
     public void showHint() {
         Light ingredientLight = this.lightRepo.getLight(getLinked_light());
         ingredientLight.turnOn();
     }
 
+    
+    /**
+   * This method is used to desactivate the Light who's binded with the curent tool 
+   *
+   */
     @Override
     public void dismissHint() {
         Light ingredientLight = this.lightRepo.getLight(getLinked_light());
