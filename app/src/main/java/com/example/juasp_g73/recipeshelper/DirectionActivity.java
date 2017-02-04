@@ -37,6 +37,14 @@ import core.PairIngredientString;
 import core.Recipe;
 import core.Tool;
 
+
+/**
+* DirectionActivity is the activity that shows the detail about the current step of the recipe
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class DirectionActivity extends AppCompatActivity {
     /***************************************************/
     /***********    PRIVATE ATTRIBUTES   ***************/
@@ -232,6 +240,11 @@ public class DirectionActivity extends AppCompatActivity {
 
     }
 
+    
+   /**
+   * This method is used to hydrate all the field in the current.
+   *  
+   */
     private void hydrateView() {
         if(r != null){
 
@@ -301,6 +314,12 @@ public class DirectionActivity extends AppCompatActivity {
             }
         }
     }
+    
+       /**
+   * This method is used to activate the Light who's binded with the curent AbstractLightLover object 
+   *
+   * @param ll is an AbstractLightLover like an ingredient or a tool
+   */
     private void showHint(final AbstractLightLover ll){
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.popup, null);
@@ -359,6 +378,13 @@ public class DirectionActivity extends AppCompatActivity {
 
     }
 
+    
+           /**
+   * Helper method to generate ingredients from a recipe
+   *
+   * @param r Recipe object which contains all the ingredients that are returned from this method
+   * @return Vector<PairIngredientString> it returns a ingredients vector from a recipe
+   */
     private Vector<PairIngredientString> generateIngredientsFromDirection(Direction d){
         Vector<PairIngredientString> ingredients = new Vector<>();
 
