@@ -10,10 +10,18 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* DirectionDao is a child of AbstractDao<Direction>, this class help us find a direction in the database.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class DirectionDao extends AbstractDao<Direction> {
 
+   /**
+   * This method is used to get the instance of a specific Direction given an id  
+   * @return Direction it returns a direction object with all his attributes.
+   */
     @Override
     public Direction find(Integer id) {
         Direction direction = new Direction(id);
