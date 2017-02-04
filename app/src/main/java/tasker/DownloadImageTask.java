@@ -9,8 +9,15 @@ import android.widget.ImageView;
 import java.io.InputStream;
 
 /**
- * Created by JUASP-G73 on 19/12/2016.
- */
+* DownloadImageTask is a child of AsyncTask<String, Void, Bitmap>.
+* Was use to run an AsyncTask for the download of images. 
+* We now use the picasso library for all future image download.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04
+* @deprecated Use Picasso Library instead
+*/
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     private ImageView bmImage;
     private long startTime;
