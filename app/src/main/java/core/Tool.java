@@ -6,8 +6,15 @@ import ca.usherbrooke.domus.lights.LightRepository;
 import java.io.Serializable;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* Tool is POJO Plain old java object with only one behaviour.
+* It's basically a container of data for a tool.
+* It's only used as a JavaBean for the UI.
+* Tool also extends a method from AbstractLightLover, so he can be directily bind with a light from the DOMUS API.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class Tool extends AbstractLightLover implements Serializable {
     private Integer id;
     private String name;
@@ -57,12 +64,20 @@ public class Tool extends AbstractLightLover implements Serializable {
         this.image_url = image_url;
     }
 
+   /**
+   * This method is used to activate the Light who's binded with the curent tool 
+   *
+   */
     @Override
     public void showHint() {
         Light toolLight = this.lightRepo.getLight(getLinked_light());
         toolLight.turnOn();
     }
 
+    /**
+   * This method is used to desactivate the Light who's binded with the curent tool 
+   *
+   */
     @Override
     public void dismissHint() {
         Light toolLight = this.lightRepo.getLight(getLinked_light());
