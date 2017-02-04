@@ -206,6 +206,14 @@ public class RecipeActivity extends AppCompatActivity {
             });
         }
     }
+    
+    
+       /**
+   * Helper method to generate ingredients from a recipe
+   *
+   * @param r Recipe object which contains all the ingredients that are returned from this method
+   * @return Vector<PairIngredientString> it returns a ingredients vector from a recipe
+   */
     private Vector<PairIngredientString> generateIngredientsFromRecipe(Recipe r){
         Vector<PairIngredientString> ingredients = new Vector<>();
         for(Direction d : r.getDirections() ){
@@ -217,6 +225,13 @@ public class RecipeActivity extends AppCompatActivity {
         return ingredients;
     }
 
+   
+   /**
+   * Helper method to generate tools from a recipe
+   *
+   * @param r Recipe object which contains all the tool that are returned from this method
+   * @return Vector<Tool> it returns a tool vector from a recipe
+   */
     private Vector<Tool> generateToolsFromRecipe(Recipe r){
         Vector<Tool> tools = new Vector<>();
         for(Direction d : r.getDirections() ){
@@ -229,6 +244,12 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
 
+    
+   /**
+   * This method is used to activate the Light who's binded with the curent AbstractLightLover object 
+   *
+   * @param ll is an AbstractLightLover like an ingredient or a tool
+   */
     private void showHint(final AbstractLightLover ll){
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.popup, null);
