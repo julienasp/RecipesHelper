@@ -3,8 +3,13 @@ package core;
 import ca.usherbrooke.domus.lights.LightRepository;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* AbstractLightLover is a class that uses DOMUS LightRepository API
+* It's also share the ImageLover contracts to his childrens
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public abstract class AbstractLightLover implements ImageLover {
     protected LightRepository lightRepo = new LightRepository();
     public abstract void showHint();
