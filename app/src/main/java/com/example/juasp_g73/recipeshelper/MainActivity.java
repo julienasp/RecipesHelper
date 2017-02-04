@@ -32,6 +32,13 @@ import java.util.Arrays;
 
 import dao.RecipeDaoTasker;
 
+/**
+* MainActivity is the activity that make sure that the NFC chip is activated and let the user scan the recipe
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class MainActivity extends AppCompatActivity {
 
     private NfcAdapter nfcAdapter = null;
@@ -208,6 +215,13 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    
+   /**
+   * Helper method to generate ingredients from a recipe
+   *
+   * @param record NdefRecord object which contains all the data of the nfc tag
+   * @return String it returns a string that contrains the data of a nfc tag
+   */
     private String readText(NdefRecord record) throws UnsupportedEncodingException {
         /*
          * See NFC forum specification for "Text Record Type Definition" at 3.2.1
