@@ -8,8 +8,15 @@ import java.io.Serializable;
 import java.util.Vector;
 
 /**
- * Created by JUASP-G73 on 06/12/2016.
- */
+* Direction is POJO Plain old java object.
+* It's basically a container of data for a direction.
+* It has no behaviour, no parent and no implementation.
+* It's only used as a JavaBean for the UI.
+*
+* @author  Julien Aspirot
+* @version 1.0
+* @since   2017-02-04 
+*/
 public class Direction implements Serializable {
     private Integer id;
     private Integer recipe_id;
